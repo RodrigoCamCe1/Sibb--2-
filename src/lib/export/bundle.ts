@@ -5,6 +5,7 @@ import { generateB2, type B2Input } from './b2';
 import { generateB3, type B3Insumo } from './b3';
 import { generateB5, type B5Entry } from './b5';
 import { generateTechSpec } from './tech-spec';
+import { generatePresupuestoPDF } from './pdf';
 import type { Project, Item } from '@/types/database';
 
 export interface BundleInput {
@@ -15,6 +16,7 @@ export interface BundleInput {
   b3Insumos: B3Insumo[];
   b5Entries: B5Entry[];
   includeB4: boolean;
+  empresa?: { name?: string; nit?: string; direccion?: string };
 }
 
 export async function generateSicoesBundle(input: BundleInput, options?: { selected?: Set<string> }) {
@@ -55,6 +57,21 @@ export async function generateSicoesBundle(input: BundleInput, options?: { selec
   if (!selected || selected.has('TECH')) {
     const tech = await generateTechSpec(input.project, input.items);
     zip.file('06-EspecificacionesTecnicas.docx', await tech.arrayBuffer());
+  }
+
+  if (!selected || selected.has('PDF')) {
+    const pdf = await generatePresupuestoPDF({
+      project: input.project,
+      rows: input.b1Rows.map((r) => ({
+        item_n: r.item_n,
+        description: r.description,
+        unit: r.unit,
+        quantity: r.quantity,
+        unit_price: r.unit_price,
+      })),
+      empresa: input.empresa,
+    });
+    zip.file('07-Presupuesto.pdf', await pdf.arrayBuffer());
   }
 
   zip.file('README.txt',

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sibbë-2 MVP — Mockups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .nav-btn.active { background: #1e293b; color: white; }
+    .badge-critical { background: #fee2e2; color: #991b1b; }
+    .badge-high { background: #fef3c7; color: #92400e; }
+    .badge-medium { background: #dbeafe; color: #1e40af; }
+    table th { font-weight: 600; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+<!-- ============================================================== -->
+<!-- TOP NAV — selector mockup -->
+<!-- ============================================================== -->
+<nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-1 overflow-x-auto">
+    <div class="text-sm font-bold text-slate-700 mr-4 whitespace-nowrap">
+      Mockup:
+    </div>
+    <button class="nav-btn active text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="login">1. Login</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="projects">2. Proyectos</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="project-detail">3. Proyecto / EDT</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="apu-editor">4. Editor APU</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="norms">5. Alertas Norma</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="export">6. Export SICOES</button>
+    <button class="nav-btn text-xs px-3 py-1.5 rounded font-medium hover:bg-slate-100" data-screen="curve-s">7. Curva S + Cronograma</button>
+  </div>
+</nav>
+
+<!-- ============================================================== -->
+<!-- 1. LOGIN -->
+<!-- ============================================================== -->
+<section id="screen-login" class="screen active min-h-screen flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <div class="text-3xl font-bold text-slate-900 mb-1">Sibbë <span class="text-slate-400 font-normal">/ Obras</span></div>
+      <p class="text-slate-500 text-sm">Presupuestos y APU para construcción BO</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-8">
+      <h2 class="text-xl font-semibold mb-1">Iniciar sesión</h2>
+      <p class="text-sm text-slate-500 mb-6">Accede a tu cuenta para gestionar proyectos</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+          <input type="email" placeholder="constructora@ejemplo.bo" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Contraseña</label>
+          <input type="password" placeholder="••••••••" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
+        </div>
+        <button class="w-full bg-slate-900 hover:bg-slate-800 text-white py-2 rounded-md text-sm font-medium transition">
+          Iniciar sesión
+        </button>
+        <div class="text-center text-sm text-slate-500">
+          ¿No tienes cuenta? <a href="#" class="text-slate-900 font-medium hover:underline">Regístrate</a>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-xs text-slate-400 mt-6">© 2026 Sibbë • La Paz, Bolivia</p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 2. LISTADO PROYECTOS -->
+<!-- ============================================================== -->
+<section id="screen-projects" class="screen min-h-screen">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Mis proyectos</h1>
+        <p class="text-sm text-slate-500 mt-1">4 proyectos activos</p>
+      </div>
+      <button class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        Nuevo proyecto
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex gap-3 mb-6">
+      <input type="text" placeholder="Buscar proyecto..." class="flex-1 max-w-md px-3 py-2 border border-slate-300 rounded-md text-sm" />
+      <select class="px-3 py-2 border border-slate-300 rounded-md text-sm">
+        <option>Todas las ciudades</option>
+        <option>La Paz</option>
+        <option>Santa Cruz</option>
+        <option>Cochabamba</option>
+      </select>
+      <select class="px-3 py-2 border border-slate-300 rounded-md text-sm">
+        <option>Todas las modalidades</option>
+        <option>ANPE</option>
+        <option>Licitación Pública</option>
+      </select>
+    </div>
+
+    <!-- Grid proyectos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Card -->
+      <div class="bg-white rounded-lg border border-slate-200 hover:shadow-md transition cursor-pointer p-5">
+        <div class="flex items-start justify-between mb-3">
+          <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">LP-001/2026</span>
+          <span class="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded">LP</span>
+        </div>
+        <h3 class="font-semibold text-slate-900 mb-1 leading-tight">Construcción Aulas U.E. San Calixto</h3>
+        <p class="text-xs text-slate-500 mb-4">GAM La Paz • CUCE 26-1234-...</p>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div class="text-slate-500">Monto</div>
+            <div class="font-bold text-slate-900 text-sm">Bs 1.245.380</div>
+          </div>
+          <div>
+            <div class="text-slate-500">Ítems</div>
+            <div class="font-bold text-slate-900 text-sm">42</div>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-xs text-slate-500">Editado hace 2h</span>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span class="text-xs text-amber-700 font-medium">3 alertas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 hover:shadow-md transition cursor-pointer p-5">
+        <div class="flex items-start justify-between mb-3">
+          <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">ANPE-007</span>
+          <span class="text-xs font-medium text-sky-700 bg-sky-50 px-2 py-1 rounded">ANPE</span>
+        </div>
+        <h3 class="font-semibold text-slate-900 mb-1 leading-tight">Mantenimiento Posta Sanitaria El Alto</h3>
+        <p class="text-xs text-slate-500 mb-4">Caja Salud • Santa Cruz</p>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div class="text-slate-500">Monto</div>
+            <div class="font-bold text-slate-900 text-sm">Bs 165.420</div>
+          </div>
+          <div>
+            <div class="text-slate-500">Ítems</div>
+            <div class="font-bold text-slate-900 text-sm">18</div>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-xs text-slate-500">Editado ayer</span>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
+            <span class="text-xs text-emerald-700 font-medium">Sin alertas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 hover:shadow-md transition cursor-pointer p-5">
+        <div class="flex items-start justify-between mb-3">
+          <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">LP-002/2026</span>
+          <span class="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded">LP</span>
+        </div>
+        <h3 class="font-semibold text-slate-900 mb-1 leading-tight">Muro de Contención Av. Buenos Aires</h3>
+        <p class="text-xs text-slate-500 mb-4">GAM Cochabamba</p>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div class="text-slate-500">Monto</div>
+            <div class="font-bold text-slate-900 text-sm">Bs 856.200</div>
+          </div>
+          <div>
+            <div class="text-slate-500">Ítems</div>
+            <div class="font-bold text-slate-900 text-sm">28</div>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-xs text-slate-500">Editado hace 3d</span>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 bg-red-400 rounded-full"></span>
+            <span class="text-xs text-red-700 font-medium">1 crítica</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border-2 border-dashed border-slate-300 hover:border-slate-400 transition cursor-pointer p-5 flex items-center justify-center text-slate-500 hover:text-slate-700">
+        <div class="text-center">
+          <i data-lucide="plus" class="w-8 h-8 mx-auto mb-2"></i>
+          <p class="text-sm font-medium">Crear proyecto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 3. PROYECTO DETALLE — EDT + DASHBOARD -->
+<!-- ============================================================== -->
+<section id="screen-project-detail" class="screen min-h-screen">
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+        <a href="#" class="hover:text-slate-900">Proyectos</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <span>Construcción Aulas U.E. San Calixto</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-bold text-slate-900">Construcción Aulas U.E. San Calixto</h1>
+          <div class="flex items-center gap-3 mt-1 text-sm text-slate-500">
+            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>La Paz</span>
+            <span>•</span>
+            <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded text-xs font-medium">LP</span>
+            <span>•</span>
+            <span>CUCE 26-1234-00-1845720-1-1</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 border border-slate-300 rounded text-sm hover:bg-slate-50">Duplicar</button>
+          <button class="px-3 py-1.5 bg-slate-900 text-white rounded text-sm font-medium flex items-center gap-1">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            Exportar SICOES
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="max-w-7xl mx-auto px-6 pb-4">
+      <div class="grid grid-cols-4 gap-3">
+        <div class="bg-slate-50 rounded p-3">
+          <div class="text-xs text-slate-500">Costo total</div>
+          <div class="text-lg font-bold text-slate-900">Bs 1.245.380</div>
+        </div>
+        <div class="bg-slate-50 rounded p-3">
+          <div class="text-xs text-slate-500">Costo/m²</div>
+          <div class="text-lg font-bold text-slate-900">Bs 3.115</div>
+        </div>
+        <div class="bg-slate-50 rounded p-3">
+          <div class="text-xs text-slate-500">Ítems</div>
+          <div class="text-lg font-bold text-slate-900">42</div>
+        </div>
+        <div class="bg-amber-50 rounded p-3 cursor-pointer hover:bg-amber-100">
+          <div class="text-xs text-amber-700">Alertas norma</div>
+          <div class="text-lg font-bold text-amber-900">3 <span class="text-xs font-normal">• 1 crítica</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 py-6">
+    <!-- Tabs -->
+    <div class="flex gap-1 mb-4 border-b border-slate-200">
+      <button class="px-4 py-2 text-sm font-medium border-b-2 border-slate-900 text-slate-900">EDT y Ítems</button>
+      <button class="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900">Indirectos</button>
+      <button class="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900">Ajuste regional</button>
+      <button class="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900">Cronograma</button>
+    </div>
+
+    <!-- EDT tabla -->
+    <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-4 py-2 w-16">Cód.</th>
+            <th class="text-left px-4 py-2">Descripción</th>
+            <th class="text-center px-4 py-2 w-20">Unidad</th>
+            <th class="text-right px-4 py-2 w-24">Cantidad</th>
+            <th class="text-right px-4 py-2 w-28">P. Unit.</th>
+            <th class="text-right px-4 py-2 w-32">Total Bs</th>
+            <th class="w-10"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Capítulo -->
+          <tr class="bg-slate-100 font-semibold">
+            <td class="px-4 py-2">01</td>
+            <td colspan="4" class="px-4 py-2">TRABAJOS PRELIMINARES</td>
+            <td class="text-right px-4 py-2">Bs 38.450</td>
+            <td></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100">
+            <td class="px-4 py-1.5 text-slate-500">01.01</td>
+            <td class="px-4 py-1.5">Instalación de faenas</td>
+            <td class="text-center">GLB</td>
+            <td class="text-right">1.00</td>
+            <td class="text-right">18,500.00</td>
+            <td class="text-right font-medium">18,500.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100">
+            <td class="px-4 py-1.5 text-slate-500">01.02</td>
+            <td class="px-4 py-1.5">Replanteo y trazado</td>
+            <td class="text-center">M2</td>
+            <td class="text-right">400.00</td>
+            <td class="text-right">12.50</td>
+            <td class="text-right font-medium">5,000.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+
+          <tr class="bg-slate-100 font-semibold">
+            <td class="px-4 py-2">03</td>
+            <td colspan="4" class="px-4 py-2">OBRA GRUESA / ESTRUCTURA</td>
+            <td class="text-right px-4 py-2">Bs 685.220</td>
+            <td></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100 bg-red-50/50">
+            <td class="px-4 py-1.5 text-slate-500 flex items-center gap-1">
+              03.04
+              <i data-lucide="alert-circle" class="w-3 h-3 text-red-600" title="Alerta norma"></i>
+            </td>
+            <td class="px-4 py-1.5">
+              Columna H°A° fc'=180 kg/cm²
+              <span class="ml-2 text-xs badge-critical px-1.5 py-0.5 rounded">CRÍTICA</span>
+            </td>
+            <td class="text-center">M3</td>
+            <td class="text-right">12.50</td>
+            <td class="text-right">2,840.00</td>
+            <td class="text-right font-medium">35,500.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100">
+            <td class="px-4 py-1.5 text-slate-500">03.07</td>
+            <td class="px-4 py-1.5">Losa maciza H°A° fc'=210 e=15cm</td>
+            <td class="text-center">M2</td>
+            <td class="text-right">280.00</td>
+            <td class="text-right">385.00</td>
+            <td class="text-right font-medium">107,800.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100">
+            <td class="px-4 py-1.5 text-slate-500">03.12</td>
+            <td class="px-4 py-1.5">Acero de refuerzo fy=4200</td>
+            <td class="text-center">KG</td>
+            <td class="text-right">8,500.00</td>
+            <td class="text-right">14.20</td>
+            <td class="text-right font-medium">120,700.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+
+          <tr class="bg-slate-100 font-semibold">
+            <td class="px-4 py-2">09</td>
+            <td colspan="4" class="px-4 py-2">INSTALACIÓN ELÉCTRICA</td>
+            <td class="text-right px-4 py-2">Bs 84.150</td>
+            <td></td>
+          </tr>
+          <tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100 bg-amber-50/50">
+            <td class="px-4 py-1.5 text-slate-500 flex items-center gap-1">
+              09.01
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-600"></i>
+            </td>
+            <td class="px-4 py-1.5">
+              Sistema eléctrico general
+              <span class="ml-2 text-xs badge-high px-1.5 py-0.5 rounded">ALTA — Falta tierra física</span>
+            </td>
+            <td class="text-center">GLB</td>
+            <td class="text-right">1.00</td>
+            <td class="text-right">62,400.00</td>
+            <td class="text-right font-medium">62,400.00</td>
+            <td class="text-center"><i data-lucide="more-vertical" class="w-3.5 h-3.5 text-slate-400"></i></td>
+          </tr>
+
+          <!-- Total -->
+          <tr class="bg-slate-900 text-white font-bold">
+            <td colspan="5" class="px-4 py-3 text-right">TOTAL</td>
+            <td class="text-right px-4 py-3">Bs 1.245.380,00</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex items-center justify-between p-3 bg-slate-50 border-t border-slate-200">
+        <button class="text-sm text-slate-700 hover:text-slate-900 flex items-center gap-1 font-medium">
+          <i data-lucide="plus" class="w-4 h-4"></i> Agregar capítulo
+        </button>
+        <span class="text-xs text-slate-500">3 capítulos visibles de 11 • <a href="#" class="text-slate-700 hover:underline">Ver todo</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 4. EDITOR APU (B-2 estructura oficial) -->
+<!-- ============================================================== -->
+<section id="screen-apu-editor" class="screen min-h-screen">
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+        <a href="#" class="hover:text-slate-900">Proyectos</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <a href="#" class="hover:text-slate-900">Aulas San Calixto</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <span>APU — Columna H°A° fc'=210</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-bold text-slate-900">APU: Columna H°A° fc'=210 kg/cm²</h1>
+          <p class="text-sm text-slate-500 mt-1">Código 03.04 • Unidad M3 • Formulario B-2</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 border border-slate-300 rounded text-sm">Aplicar factor La Paz</button>
+          <button class="px-3 py-1.5 bg-slate-900 text-white rounded text-sm font-medium">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 py-6">
+    <!-- Tabs (datos / esp técnica) -->
+    <div class="flex gap-1 mb-4 border-b border-slate-200">
+      <button class="px-4 py-2 text-sm font-medium border-b-2 border-slate-900 text-slate-900">Análisis B-2</button>
+      <button class="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900">Especificación Técnica</button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6">
+      <!-- Tabla APU 2/3 -->
+      <div class="col-span-2 space-y-4">
+
+        <!-- 1. MATERIALES -->
+        <details open class="bg-white border border-slate-200 rounded-lg">
+          <summary class="px-4 py-3 cursor-pointer font-semibold flex items-center justify-between hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <i data-lucide="package" class="w-4 h-4 text-slate-500"></i>
+              1. MATERIALES
+            </span>
+            <span class="text-sm text-slate-700 font-bold">Bs 1.685,00</span>
+          </summary>
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 border-y border-slate-200 text-xs">
+              <tr>
+                <th class="text-left px-3 py-1.5">Descripción</th>
+                <th class="text-center px-3 py-1.5 w-16">Unid</th>
+                <th class="text-right px-3 py-1.5 w-20">Cant.</th>
+                <th class="text-right px-3 py-1.5 w-24">P. Unit</th>
+                <th class="text-right px-3 py-1.5 w-24">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Cemento Portland IP-30</td>
+                <td class="text-center">BLS</td>
+                <td class="text-right">7.50</td>
+                <td class="text-right">55.00</td>
+                <td class="text-right font-medium">412.50</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Arena gruesa</td>
+                <td class="text-center">M3</td>
+                <td class="text-right">0.45</td>
+                <td class="text-right">165.00</td>
+                <td class="text-right font-medium">74.25</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Grava 3/4"</td>
+                <td class="text-center">M3</td>
+                <td class="text-right">0.85</td>
+                <td class="text-right">195.00</td>
+                <td class="text-right font-medium">165.75</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Acero corrugado Ø12mm fy=4200</td>
+                <td class="text-center">KG</td>
+                <td class="text-right">85.00</td>
+                <td class="text-right">9.00</td>
+                <td class="text-right font-medium">765.00</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Madera mara (encofrado)</td>
+                <td class="text-center">PT</td>
+                <td class="text-right">12.00</td>
+                <td class="text-right">22.50</td>
+                <td class="text-right font-medium">270.00</td>
+              </tr>
+              <tr>
+                <td colspan="5" class="px-3 py-1.5 text-slate-500 italic text-xs">
+                  + Agregar material...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 2. MANO DE OBRA -->
+        <details open class="bg-white border border-slate-200 rounded-lg">
+          <summary class="px-4 py-3 cursor-pointer font-semibold flex items-center justify-between hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <i data-lucide="users" class="w-4 h-4 text-slate-500"></i>
+              2. MANO DE OBRA
+            </span>
+            <span class="text-sm text-slate-700 font-bold">Bs 768,42</span>
+          </summary>
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 border-y border-slate-200 text-xs">
+              <tr>
+                <th class="text-left px-3 py-1.5">Descripción</th>
+                <th class="text-center px-3 py-1.5 w-16">Unid</th>
+                <th class="text-right px-3 py-1.5 w-20">Cant.</th>
+                <th class="text-right px-3 py-1.5 w-24">P. Unit</th>
+                <th class="text-right px-3 py-1.5 w-24">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Albañil</td>
+                <td class="text-center">HRS</td>
+                <td class="text-right">6.50</td>
+                <td class="text-right">28.00</td>
+                <td class="text-right font-medium">182.00</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Fierrero</td>
+                <td class="text-center">HRS</td>
+                <td class="text-right">5.00</td>
+                <td class="text-right">32.00</td>
+                <td class="text-right font-medium">160.00</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Encofrador</td>
+                <td class="text-center">HRS</td>
+                <td class="text-right">3.50</td>
+                <td class="text-right">32.00</td>
+                <td class="text-right font-medium">112.00</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-3 py-1.5">Ayudante</td>
+                <td class="text-center">HRS</td>
+                <td class="text-right">8.00</td>
+                <td class="text-right">18.00</td>
+                <td class="text-right font-medium">144.00</td>
+              </tr>
+              <tr class="bg-slate-50 border-b border-slate-200 text-xs">
+                <td colspan="4" class="px-3 py-1.5 text-right font-medium">SUBTOTAL MANO DE OBRA</td>
+                <td class="text-right font-bold">598.00</td>
+              </tr>
+              <tr class="bg-slate-50 border-b border-slate-100 text-xs">
+                <td colspan="4" class="px-3 py-1 text-right text-slate-600">+ Cargas sociales (71.18% × subtotal)</td>
+                <td class="text-right">425.66</td>
+              </tr>
+              <tr class="bg-slate-50 border-b border-slate-200 text-xs">
+                <td colspan="4" class="px-3 py-1 text-right text-slate-600">+ IVA mano obra (14.94% × subtotal+CS)</td>
+                <td class="text-right">152.91</td>
+              </tr>
+              <tr class="bg-slate-100 font-semibold">
+                <td colspan="4" class="px-3 py-1.5 text-right">TOTAL MANO DE OBRA</td>
+                <td class="text-right">1.176,57</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 3. EQUIPO -->
+        <details class="bg-white border border-slate-200 rounded-lg">
+          <summary class="px-4 py-3 cursor-pointer font-semibold flex items-center justify-between hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <i data-lucide="wrench" class="w-4 h-4 text-slate-500"></i>
+              3. EQUIPO Y HERRAMIENTAS
+            </span>
+            <span class="text-sm text-slate-700 font-bold">Bs 195,33</span>
+          </summary>
+        </details>
+      </div>
+
+      <!-- Sidebar totales 1/3 -->
+      <div class="space-y-4">
+        <div class="bg-white border border-slate-200 rounded-lg p-4">
+          <h3 class="font-semibold text-sm mb-3 text-slate-900">Resumen B-2</h3>
+          <div class="space-y-1.5 text-sm">
+            <div class="flex justify-between text-slate-600">
+              <span>1. Materiales</span>
+              <span class="font-medium text-slate-900">1.685,00</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>2. Mano de obra</span>
+              <span class="font-medium text-slate-900">1.176,57</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>3. Equipo + herram.</span>
+              <span class="font-medium text-slate-900">195,33</span>
+            </div>
+            <div class="border-t border-slate-200 pt-1.5 mt-1.5 flex justify-between font-medium">
+              <span>Costo directo</span>
+              <span class="text-slate-900">3.056,90</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>4. GG (10% CD)</span>
+              <span class="font-medium text-slate-900">305,69</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>5. Utilidad (8%)</span>
+              <span class="font-medium text-slate-900">268,98</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>6. IT (3.09%)</span>
+              <span class="font-medium text-slate-900">112,32</span>
+            </div>
+            <div class="border-t-2 border-slate-900 pt-2 mt-2 flex justify-between font-bold text-base">
+              <span>P.U. Total</span>
+              <span class="text-slate-900">Bs 3.743,89</span>
+            </div>
+            <div class="text-xs text-slate-500 italic">Adoptado: Bs 3.744,00</div>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="info" class="w-4 h-4 text-amber-700"></i>
+            <span class="font-semibold text-sm text-amber-900">Factor regional activo</span>
+          </div>
+          <p class="text-xs text-amber-800">
+            Ciudad: <strong>La Paz</strong>. Rendimientos y precios base.
+            Cambiar ciudad recalcula automáticamente.
+          </p>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-700"></i>
+            <span class="font-semibold text-sm text-emerald-900">Sin alertas norma</span>
+          </div>
+          <p class="text-xs text-emerald-800">
+            fc'=210 cumple CBH-87 Art. 10.1.2 (mínimo columnas).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 5. ALERTAS NORMA -->
+<!-- ============================================================== -->
+<section id="screen-norms" class="screen min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <div class="mb-6">
+      <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+        <a href="#" class="hover:text-slate-900">Aulas San Calixto</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <span>Validador normativo</span>
+      </div>
+      <h1 class="text-2xl font-bold text-slate-900">Alertas normativas</h1>
+      <p class="text-sm text-slate-500 mt-1">3 alertas detectadas contra CBH-87 / NB 1225001 / NB 777</p>
+    </div>
+
+    <!-- Resumen severidades -->
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div class="flex items-center gap-2 mb-1">
+          <i data-lucide="alert-octagon" class="w-4 h-4 text-red-700"></i>
+          <span class="text-xs font-semibold text-red-900">CRÍTICA</span>
+        </div>
+        <div class="text-2xl font-bold text-red-900">1</div>
+        <div class="text-xs text-red-700">Bloquea export</div>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <div class="flex items-center gap-2 mb-1">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-700"></i>
+          <span class="text-xs font-semibold text-amber-900">ALTA</span>
+        </div>
+        <div class="text-2xl font-bold text-amber-900">1</div>
+        <div class="text-xs text-amber-700">Resolver antes de envío</div>
+      </div>
+      <div class="bg-sky-50 border border-sky-200 rounded-lg p-4">
+        <div class="flex items-center gap-2 mb-1">
+          <i data-lucide="info" class="w-4 h-4 text-sky-700"></i>
+          <span class="text-xs font-semibold text-sky-900">MEDIA</span>
+        </div>
+        <div class="text-2xl font-bold text-sky-900">1</div>
+        <div class="text-xs text-sky-700">Recomendación</div>
+      </div>
+    </div>
+
+    <!-- Lista alertas -->
+    <div class="space-y-3">
+      <div class="bg-white border-l-4 border-red-500 border-y border-r border-slate-200 rounded-r-lg p-4">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge-critical text-xs font-semibold px-2 py-0.5 rounded">CRÍTICA</span>
+              <span class="text-xs text-slate-500">NORM-001 • CBH-87 Art. 10.1.2</span>
+            </div>
+            <h3 class="font-semibold text-slate-900">Resistencia hormigón columnas insuficiente</h3>
+            <p class="text-sm text-slate-600 mt-1">
+              Ítem <strong>03.04 Columna H°A° fc'=180 kg/cm²</strong> no cumple resistencia mínima. CBH-87 exige fc' ≥ 210 kg/cm² en columnas.
+            </p>
+            <div class="mt-2 bg-slate-50 rounded p-2 text-xs">
+              <strong class="text-slate-700">Sugerencia:</strong> <span class="text-slate-600">Cambiar especificación a fc'=210 o superior. Considerar fc'=250 para edificios &gt; 4 plantas.</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <button class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded font-medium">Ir al ítem</button>
+            <button class="text-xs text-slate-500 hover:text-slate-700 px-3 py-1">Ignorar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border-l-4 border-amber-500 border-y border-r border-slate-200 rounded-r-lg p-4">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge-high text-xs font-semibold px-2 py-0.5 rounded">ALTA</span>
+              <span class="text-xs text-slate-500">NORM-008 • NB 777 Sec. 6</span>
+            </div>
+            <h3 class="font-semibold text-slate-900">Falta puesta a tierra física</h3>
+            <p class="text-sm text-slate-600 mt-1">
+              Proyecto tiene ítems eléctricos (capítulo 09) pero no incluye ítem de sistema de puesta a tierra.
+            </p>
+            <div class="mt-2 bg-slate-50 rounded p-2 text-xs">
+              <strong class="text-slate-700">Sugerencia:</strong> <span class="text-slate-600">Agregar ítem "SISTEMA DE PUESTA A TIERRA" (GLB) — varilla copperweld + conductor + mejorador de suelo.</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <button class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded font-medium">Agregar ítem</button>
+            <button class="text-xs text-slate-500 hover:text-slate-700 px-3 py-1">Ignorar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border-l-4 border-sky-500 border-y border-r border-slate-200 rounded-r-lg p-4">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge-medium text-xs font-semibold px-2 py-0.5 rounded">MEDIA</span>
+              <span class="text-xs text-slate-500">NORM-010 • CBH-87 Art. 9.1</span>
+            </div>
+            <h3 class="font-semibold text-slate-900">Tipo de cemento para zapatas</h3>
+            <p class="text-sm text-slate-600 mt-1">
+              Cimentaciones podrían beneficiarse de cemento IP-30 (puzolánico) o resistente a sulfatos según agresividad del suelo.
+            </p>
+            <div class="mt-2 bg-slate-50 rounded p-2 text-xs">
+              <strong class="text-slate-700">Sugerencia:</strong> <span class="text-slate-600">Especificar cemento Portland IP-30 en sección "Materiales" de las Especificaciones Técnicas de zapatas.</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <button class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded font-medium">Editar especificación</button>
+            <button class="text-xs text-slate-500 hover:text-slate-700 px-3 py-1">Ignorar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 6. EXPORT SICOES -->
+<!-- ============================================================== -->
+<section id="screen-export" class="screen min-h-screen flex items-center justify-center px-4 py-8">
+  <div class="w-full max-w-3xl">
+    <div class="bg-white rounded-lg shadow-lg border border-slate-200">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Exportar a SICOES</h2>
+          <p class="text-sm text-slate-500 mt-1">Construcción Aulas U.E. San Calixto • Modalidad: Licitación Pública</p>
+        </div>
+        <button class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="px-6 py-5">
+        <!-- Alerta blocker -->
+        <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-5 flex items-start gap-2">
+          <i data-lucide="alert-octagon" class="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <div class="text-sm font-semibold text-red-900">Export bloqueado por 1 alerta crítica</div>
+            <p class="text-xs text-red-700 mt-0.5">Resuelve <a href="#" class="underline font-medium">NORM-001 (Resistencia columnas)</a> antes de continuar.</p>
+          </div>
+        </div>
+
+        <h3 class="font-semibold text-sm mb-3 text-slate-900">Archivos a generar (paquete ZIP)</h3>
+
+        <div class="space-y-2 mb-5">
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">01-B1-Presupuesto.xlsx</div>
+              <div class="text-xs text-slate-500">Formulario B-1 oficial — 42 ítems, fila total numeral + literal</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">02-B2-APU.xlsx</div>
+              <div class="text-xs text-slate-500">Análisis de Precios Unitarios — 42 hojas (una por ítem)</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">03-B3-CatalogoInsumos.xlsx</div>
+              <div class="text-xs text-slate-500">Precios elementales materiales / mano de obra / equipo</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer opacity-60">
+            <input type="checkbox" class="rounded text-slate-900" />
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-slate-400"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">04-B4-CostoEquipos.xlsx</div>
+              <div class="text-xs text-slate-500">Opcional — solo si la obra tiene equipo pesado</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">05-B5-Cronograma.xlsx</div>
+              <div class="text-xs text-slate-500">Cronograma de desembolsos — Anticipo + 4 tramos</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file-text" class="w-5 h-5 text-sky-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">06-EspecificacionesTecnicas.docx</div>
+              <div class="text-xs text-slate-500">5 secciones por ítem (descripción, materiales, ejecución, medición, pago)</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-slate-50 rounded border border-slate-200 cursor-pointer">
+            <input type="checkbox" checked class="rounded text-slate-900" />
+            <i data-lucide="file" class="w-5 h-5 text-rose-600"></i>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-slate-900">07-Presupuesto.pdf</div>
+              <div class="text-xs text-slate-500">Versión imprimible con membrete editable</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-3 text-center text-xs text-slate-500 bg-slate-50 rounded p-3 mb-5">
+          <div>
+            <div class="text-base font-bold text-slate-900">6 archivos</div>
+            <div>seleccionados</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-slate-900">~2.4 MB</div>
+            <div>tamaño estimado</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-slate-900">~8 seg</div>
+            <div>tiempo de generación</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 rounded-b-lg flex items-center justify-between">
+        <span class="text-xs text-slate-500">CUCE: 26-1234-00-1845720-1-1</span>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-200 rounded">Cancelar</button>
+          <button disabled class="px-4 py-1.5 text-sm bg-slate-300 text-slate-500 rounded font-medium cursor-not-allowed">
+            Generar paquete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- 7. CURVA S + CRONOGRAMA -->
+<!-- ============================================================== -->
+<section id="screen-curve-s" class="screen min-h-screen">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold text-slate-900">Cronograma y Curva S</h1>
+      <p class="text-sm text-slate-500 mt-1">Construcción Aulas U.E. San Calixto — Plazo total 120 días calendario</p>
+    </div>
+
+    <!-- Gantt simplificado -->
+    <div class="bg-white border border-slate-200 rounded-lg p-5 mb-6">
+      <h3 class="font-semibold text-sm mb-4 text-slate-900">Cronograma por capítulo (Gantt)</h3>
+      <div class="space-y-2 text-sm">
+        <div class="grid grid-cols-12 gap-1 text-xs text-slate-500 mb-2">
+          <div class="col-span-3"></div>
+          <div>S1</div><div>S2</div><div>S3</div><div>S4</div>
+          <div>S5</div><div>S6</div><div>S7</div><div>S8</div>
+          <div>S9</div><div>S10</div><div>S11</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">01. Preliminares</div>
+          <div class="col-span-2 h-5 bg-slate-700 rounded-sm flex items-center justify-center text-white text-[10px]">3.1%</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">02. Mov. Tierras</div>
+          <div class="col-start-3 col-span-2 h-5 bg-amber-600 rounded-sm flex items-center justify-center text-white text-[10px]">8.5%</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">03. Obra Gruesa</div>
+          <div class="col-start-5 col-span-5 h-5 bg-rose-600 rounded-sm flex items-center justify-center text-white text-[10px]">55.0%</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">04. Mampostería</div>
+          <div class="col-start-8 col-span-3 h-5 bg-sky-600 rounded-sm flex items-center justify-center text-white text-[10px]">12.0%</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">05. Revestimientos</div>
+          <div class="col-start-10 col-span-3 h-5 bg-emerald-600 rounded-sm flex items-center justify-center text-white text-[10px]">14.2%</div>
+        </div>
+        <div class="grid grid-cols-12 gap-1 items-center">
+          <div class="col-span-3 text-xs">09. Eléctrica + 08. Sanitaria</div>
+          <div class="col-start-11 col-span-2 h-5 bg-violet-600 rounded-sm flex items-center justify-center text-white text-[10px]">7.2%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-5">
+      <!-- Curva S -->
+      <div class="col-span-2 bg-white border border-slate-200 rounded-lg p-5">
+        <h3 class="font-semibold text-sm mb-4 text-slate-900">Curva S — Inversión acumulada planeada</h3>
+        <!-- Mock chart with SVG -->
+        <svg viewBox="0 0 600 220" class="w-full">
+          <!-- axes -->
+          <line x1="40" y1="190" x2="580" y2="190" stroke="#cbd5e1" />
+          <line x1="40" y1="20" x2="40" y2="190" stroke="#cbd5e1" />
+          <!-- gridlines -->
+          <line x1="40" y1="155" x2="580" y2="155" stroke="#e2e8f0" stroke-dasharray="2,2" />
+          <line x1="40" y1="115" x2="580" y2="115" stroke="#e2e8f0" stroke-dasharray="2,2" />
+          <line x1="40" y1="75" x2="580" y2="75" stroke="#e2e8f0" stroke-dasharray="2,2" />
+          <!-- y labels -->
+          <text x="35" y="193" font-size="10" text-anchor="end" fill="#64748b">0%</text>
+          <text x="35" y="158" font-size="10" text-anchor="end" fill="#64748b">25%</text>
+          <text x="35" y="118" font-size="10" text-anchor="end" fill="#64748b">50%</text>
+          <text x="35" y="78" font-size="10" text-anchor="end" fill="#64748b">75%</text>
+          <text x="35" y="25" font-size="10" text-anchor="end" fill="#64748b">100%</text>
+          <!-- curve -->
+          <path d="M 40,190 Q 120,180 200,140 T 360,55 Q 480,30 580,22"
+                stroke="#0f172a" stroke-width="2.5" fill="none" />
+          <path d="M 40,190 Q 120,180 200,140 T 360,55 Q 480,30 580,22 L 580,190 Z"
+                fill="#0f172a" fill-opacity="0.08" />
+          <!-- points -->
+          <circle cx="120" cy="182" r="3" fill="#0f172a" />
+          <circle cx="200" cy="140" r="3" fill="#0f172a" />
+          <circle cx="280" cy="95" r="3" fill="#0f172a" />
+          <circle cx="360" cy="55" r="3" fill="#0f172a" />
+          <circle cx="440" cy="35" r="3" fill="#0f172a" />
+          <circle cx="520" cy="25" r="3" fill="#0f172a" />
+          <!-- x labels -->
+          <text x="120" y="205" font-size="10" text-anchor="middle" fill="#64748b">M1</text>
+          <text x="200" y="205" font-size="10" text-anchor="middle" fill="#64748b">M2</text>
+          <text x="280" y="205" font-size="10" text-anchor="middle" fill="#64748b">M3</text>
+          <text x="360" y="205" font-size="10" text-anchor="middle" fill="#64748b">M4</text>
+          <text x="440" y="205" font-size="10" text-anchor="middle" fill="#64748b">M5</text>
+          <text x="520" y="205" font-size="10" text-anchor="middle" fill="#64748b">M6</text>
+        </svg>
+      </div>
+
+      <!-- Cronograma desembolsos B-5 -->
+      <div class="bg-white border border-slate-200 rounded-lg p-5">
+        <h3 class="font-semibold text-sm mb-4 text-slate-900">Desembolsos (B-5)</h3>
+        <div class="space-y-2.5 text-sm">
+          <div class="flex justify-between items-center p-2 bg-slate-100 rounded">
+            <span>Anticipo</span>
+            <span class="font-bold">20%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M1 — 1er desembolso</span>
+            <span class="font-medium">5%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M2 — 2do desembolso</span>
+            <span class="font-medium">15%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M3 — 3er desembolso</span>
+            <span class="font-medium">25%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M4 — 4to desembolso</span>
+            <span class="font-medium">20%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M5 — 5to desembolso</span>
+            <span class="font-medium">10%</span>
+          </div>
+          <div class="flex justify-between items-center px-2 py-1.5 hover:bg-slate-50">
+            <span class="text-slate-600">M6 — Liquidación</span>
+            <span class="font-medium">5%</span>
+          </div>
+          <div class="border-t-2 border-slate-900 pt-2 mt-2 flex justify-between items-center px-2 font-bold">
+            <span>Total</span>
+            <span>100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SCRIPTS -->
+<!-- ============================================================== -->
+<script>
+  lucide.createIcons();
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const screens = document.querySelectorAll('.screen');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.dataset.screen;
+      screens.forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => lucide.createIcons(), 50);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ export type Ciudad = 'La Paz' | 'Cochabamba' | 'Santa Cruz' | 'Tarija' | 'Sucre'
 export type Severidad = 'CRITICAL' | 'HIGH' | 'MEDIUM';
 export type InsumoTipo = 'material' | 'labor' | 'equipment';
 
-export interface Profile {
+export type Profile = {
   id: string;
   email: string;
   name: string | null;
@@ -15,7 +15,7 @@ export interface Profile {
   updated_at: string;
 }
 
-export interface Project {
+export type Project = {
   id: string;
   user_id: string;
   name: string;
@@ -36,7 +36,7 @@ export interface Project {
   updated_at: string;
 }
 
-export interface Chapter {
+export type Chapter = {
   id: string;
   project_id: string;
   parent_id: string | null;
@@ -46,7 +46,7 @@ export interface Chapter {
   created_at: string;
 }
 
-export interface Item {
+export type Item = {
   id: string;
   chapter_id: string;
   apu_id: string | null;
@@ -64,7 +64,7 @@ export interface Item {
   created_at: string;
 }
 
-export interface APU {
+export type APU = {
   id: string;
   project_id: string | null;
   code: string;
@@ -77,7 +77,7 @@ export interface APU {
   created_at: string;
 }
 
-export interface Material {
+export type Material = {
   id: string;
   project_id: string | null;
   code: string;
@@ -88,7 +88,7 @@ export interface Material {
   created_at: string;
 }
 
-export interface Labor {
+export type Labor = {
   id: string;
   project_id: string | null;
   code: string;
@@ -98,7 +98,7 @@ export interface Labor {
   created_at: string;
 }
 
-export interface Equipment {
+export type Equipment = {
   id: string;
   project_id: string | null;
   code: string;
@@ -113,35 +113,35 @@ export interface Equipment {
   created_at: string;
 }
 
-export interface APUMaterial {
+export type APUMaterial = {
   apu_id: string;
   material_id: string;
   quantity: number;
   waste_pct: number;
 }
 
-export interface APULabor {
+export type APULabor = {
   apu_id: string;
   labor_id: string;
   quantity: number;
   performance: number | null;
 }
 
-export interface APUEquipment {
+export type APUEquipment = {
   apu_id: string;
   equipment_id: string;
   quantity: number;
   performance: number | null;
 }
 
-export interface RegionalFactor {
+export type RegionalFactor = {
   city: Ciudad;
   performance_factor: number;
   labor_factor: number;
   material_factor: number;
 }
 
-export interface NormRule {
+export type NormRule = {
   id: string;
   code: string;
   norm_reference: string;
@@ -153,7 +153,7 @@ export interface NormRule {
   created_at: string;
 }
 
-export interface DisbursementEntry {
+export type DisbursementEntry = {
   id: string;
   project_id: string;
   order_index: number;
@@ -163,24 +163,49 @@ export interface DisbursementEntry {
   monto_pct: number;
 }
 
-// Esqueleto del shape Database para typing del SupabaseClient
+export type ScheduleEntry = {
+  id: string;
+  project_id: string;
+  chapter_id: string;
+  start_day: number;
+  duration_days: number;
+}
+
+export type InsumoCatalog = {
+  id: string;
+  project_id: string;
+  tipo: InsumoTipo;
+  description: string;
+  unit: string;
+  precio_unitario: number;
+  source_id: string | null;
+  created_at: string;
+}
+
+// Esqueleto del shape Database para typing del SupabaseClient.
+// Cada tabla incluye Relationships: [] — postgrest-js >= 2.x lo exige para
+// satisfacer GenericTable; sin él las filas colapsan a `never`.
+type Tbl<T> = { Row: T; Insert: Partial<T>; Update: Partial<T>; Relationships: [] };
+
 export interface Database {
   public: {
     Tables: {
-      profiles: { Row: Profile; Insert: Partial<Profile>; Update: Partial<Profile> };
-      projects: { Row: Project; Insert: Partial<Project>; Update: Partial<Project> };
-      chapters: { Row: Chapter; Insert: Partial<Chapter>; Update: Partial<Chapter> };
-      items: { Row: Item; Insert: Partial<Item>; Update: Partial<Item> };
-      apus: { Row: APU; Insert: Partial<APU>; Update: Partial<APU> };
-      materials: { Row: Material; Insert: Partial<Material>; Update: Partial<Material> };
-      labor: { Row: Labor; Insert: Partial<Labor>; Update: Partial<Labor> };
-      equipment: { Row: Equipment; Insert: Partial<Equipment>; Update: Partial<Equipment> };
-      apu_materials: { Row: APUMaterial; Insert: Partial<APUMaterial>; Update: Partial<APUMaterial> };
-      apu_labor: { Row: APULabor; Insert: Partial<APULabor>; Update: Partial<APULabor> };
-      apu_equipment: { Row: APUEquipment; Insert: Partial<APUEquipment>; Update: Partial<APUEquipment> };
-      regional_factors: { Row: RegionalFactor; Insert: Partial<RegionalFactor>; Update: Partial<RegionalFactor> };
-      norm_rules: { Row: NormRule; Insert: Partial<NormRule>; Update: Partial<NormRule> };
-      disbursement_schedule: { Row: DisbursementEntry; Insert: Partial<DisbursementEntry>; Update: Partial<DisbursementEntry> };
+      profiles: Tbl<Profile>;
+      projects: Tbl<Project>;
+      chapters: Tbl<Chapter>;
+      items: Tbl<Item>;
+      apus: Tbl<APU>;
+      materials: Tbl<Material>;
+      labor: Tbl<Labor>;
+      equipment: Tbl<Equipment>;
+      apu_materials: Tbl<APUMaterial>;
+      apu_labor: Tbl<APULabor>;
+      apu_equipment: Tbl<APUEquipment>;
+      regional_factors: Tbl<RegionalFactor>;
+      norm_rules: Tbl<NormRule>;
+      disbursement_schedule: Tbl<DisbursementEntry>;
+      schedule_entries: Tbl<ScheduleEntry>;
+      insumos_catalog: Tbl<InsumoCatalog>;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

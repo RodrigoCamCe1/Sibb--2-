@@ -9,8 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { validateProject } from '@/lib/norm-validator';
 import { generateSicoesBundle } from '@/lib/export/bundle';
 import { generatePresupuestoPDF } from '@/lib/export/pdf';
+import { buildExportData, type ExportData } from '@/lib/export-data';
+import { formatBOB } from '@/lib/utils';
 import { saveAs } from 'file-saver';
-import type { Project, Item } from '@/types/database';
+import type { Project } from '@/types/database';
 import { ChevronRight, FileSpreadsheet, FileText, FileImage, AlertOctagon, Download, Eye, Loader2 } from 'lucide-react';
 
 const FILES: { key: string; name: string; description: string; modality: 'both' | 'lp'; icon: 'sheet' | 'doc' | 'pdf' }[] = [
@@ -28,7 +30,7 @@ function ExportarPageInner() {
   const projectId = searchParams.get('id');
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<Project | null>(null);
-  const [items, setItems] = useState<Item[]>([]);
+  const [data, setData] = useState<ExportData | null>(null);
   const [empresa, setEmpresa] = useState<{ name?: string; nit?: string; direccion?: string }>({});
   const [selected, setSelected] = useState<Set<string>>(new Set(['B1', 'B2', 'B3', 'B5', 'TECH', 'PDF']));
   const [generating, setGenerating] = useState(false);
@@ -37,48 +39,28 @@ function ExportarPageInner() {
   useEffect(() => {
     if (!projectId) return;
     const sb = getSupabase();
-    Promise.all([
-      sb.from('projects').select('*').eq('id', projectId).maybeSingle(),
-      sb.from('items').select('*, chapters!inner(project_id)').eq('chapters.project_id', projectId).order('order_index'),
-      sb.auth.getUser().then(async ({ data }) => {
-        if (!data.user) return null;
-        const { data: profile } = await sb.from('profiles').select('company_name, name').eq('id', data.user.id).maybeSingle();
-        return profile;
-      }),
-    ]).then(([p, i, prof]) => {
-      setProject((p.data as Project | null) ?? null);
-      setItems(((i.data as Item[] | null) ?? []));
-      if (prof) {
-        setEmpresa({
-          name: (prof as { company_name?: string; name?: string }).company_name ?? (prof as { name?: string }).name ?? undefined,
-        });
-      }
+    (async () => {
+      const [{ data: p }, prof] = await Promise.all([
+        sb.from('projects').select('*').eq('id', projectId).maybeSingle(),
+        sb.auth.getUser().then(async ({ data: u }) => {
+          if (!u.user) return null;
+          const { data: profile } = await sb.from('profiles').select('company_name, name').eq('id', u.user.id).maybeSingle();
+          return profile as { company_name?: string; name?: string } | null;
+        }),
+      ]);
+      const proj = (p as Project | null) ?? null;
+      setProject(proj);
+      if (prof) setEmpresa({ name: prof.company_name ?? prof.name ?? undefined });
+      if (proj) setData(await buildExportData(proj));
       setLoading(false);
-    });
+    })();
   }, [projectId]);
 
   async function onPreviewPDF() {
-    if (!project) return;
+    if (!project || !data) return;
     setPreviewing(true);
     try {
-      const rows = items.length > 0
-        ? items.map((it, idx) => ({
-            item_n: idx + 1,
-            code: it.code,
-            description: it.description,
-            unit: it.unit,
-            quantity: it.quantity,
-            unit_price: 0,
-          }))
-        : [
-            // Datos demo si proyecto no tiene ítems
-            { item_n: 1, code: '01.01', description: 'Instalación de faenas', unit: 'GLB', quantity: 1, unit_price: 18500 },
-            { item_n: 2, code: '01.02', description: 'Replanteo y trazado', unit: 'M2', quantity: 400, unit_price: 12.5 },
-            { item_n: 3, code: '03.04', description: "Columna H°A° fc'=210 kg/cm²", unit: 'M3', quantity: 12.5, unit_price: 2840 },
-            { item_n: 4, code: '03.07', description: "Losa maciza H°A° fc'=210 e=15cm", unit: 'M2', quantity: 280, unit_price: 385 },
-            { item_n: 5, code: '03.12', description: 'Acero de refuerzo fy=4200', unit: 'KG', quantity: 8500, unit_price: 14.2 },
-          ];
-      const blob = await generatePresupuestoPDF({ project, rows, empresa });
+      const blob = await generatePresupuestoPDF({ project, rows: data.b1Rows, empresa });
       const slug = project.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').slice(0, 50);
       saveAs(blob, `presupuesto-${slug}.pdf`);
     } finally {
@@ -90,8 +72,11 @@ function ExportarPageInner() {
   if (!project) return <div className="p-8 text-center text-slate-500">Proyecto no encontrado</div>;
 
   const isLP = project.modalidad === 'LP';
-  const alerts = validateProject({ project, items, total_cost: 0 });
+  const items = data?.items ?? [];
+  const total = data?.total ?? 0;
+  const alerts = validateProject({ project, items, total_cost: total });
   const blockers = alerts.filter((a) => a.severity === 'CRITICAL');
+  const noPriced = data ? data.b1Rows.every((r) => r.unit_price === 0) : true;
 
   function toggleFile(key: string) {
     setSelected((prev) => {
@@ -103,33 +88,18 @@ function ExportarPageInner() {
   }
 
   async function onExport() {
-    if (!project) return;
+    if (!project || !data) return;
     setGenerating(true);
     try {
-      // Datos mínimos para demo (TODO: alimentar con datos reales del proyecto)
-      const b1Rows = items.map((it, idx) => ({
-        item_n: idx + 1,
-        description: it.description,
-        unit: it.unit,
-        quantity: it.quantity,
-        unit_price: 0, // TODO: leer cached_unit_price del APU
-      }));
-
       await generateSicoesBundle(
         {
           project,
-          items,
-          b1Rows,
-          b2Inputs: [],
-          b3Insumos: [],
-          b5Entries: [
-            { n: 1, description: 'Anticipo', mes_o_semana: 'M0', total_pct: 20 },
-            { n: 2, description: '1er Desembolso', mes_o_semana: 'M1', total_pct: 20 },
-            { n: 3, description: '2do Desembolso', mes_o_semana: 'M2', total_pct: 20 },
-            { n: 4, description: '3er Desembolso', mes_o_semana: 'M3', total_pct: 20 },
-            { n: 5, description: 'Liquidación final', mes_o_semana: 'M4', total_pct: 20 },
-          ],
-          includeB4: false,
+          items: data.items,
+          b1Rows: data.b1Rows,
+          b2Inputs: data.b2Inputs,
+          b3Insumos: data.b3Insumos,
+          b5Entries: data.b5Entries,
+          includeB4: data.includeB4,
           empresa,
         },
         { selected },
@@ -149,9 +119,20 @@ function ExportarPageInner() {
         <span>Exportar SICOES</span>
       </div>
       <h1 className="text-2xl font-bold text-slate-900 mb-1">Exportar a SICOES</h1>
-      <p className="text-sm text-slate-500 mb-6">
-        Modalidad <Badge variant={isLP ? 'success' : 'info'} className="ml-1">{project.modalidad}</Badge> • {isLP ? 'Genera B-1 a B-5' : 'Genera solo B-1'}
+      <p className="text-sm text-slate-500 mb-4">
+        Modalidad <Badge variant={isLP ? 'success' : 'info'} className="ml-1">{project.modalidad}</Badge> • {isLP ? 'Genera B-1 a B-5' : 'Genera solo B-1'} • {items.length} ítem{items.length === 1 ? '' : 's'} • Total {formatBOB(total)}
       </p>
+
+      {noPriced && items.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5 text-sm text-amber-800">
+          Ningún ítem tiene APU cargado — los formularios saldrán con precio 0. Cargá los APUs desde el detalle antes de exportar.
+        </div>
+      )}
+      {items.length === 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5 text-sm text-amber-800">
+          El proyecto no tiene ítems. Agregá capítulos e ítems en el <Link href={`/proyectos/detalle?id=${project.id}`} className="underline font-medium">detalle</Link>.
+        </div>
+      )}
 
       {blockers.length > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-5 flex items-start gap-3">

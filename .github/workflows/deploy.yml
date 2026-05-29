@@ -28,7 +28,10 @@ jobs:
           cache: 'npm'
 
       - name: Install deps
-        run: npm ci
+        # npm install (no ci): el lockfile se genera en Windows y no incluye
+        # las deps opcionales nativas de Linux (@emnapi/*), por lo que npm ci
+        # falla por desincronización. npm install las resuelve por plataforma.
+        run: npm install --no-audit --no-fund
 
       - name: Build (static export)
         env:
